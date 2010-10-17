@@ -179,6 +179,10 @@ public class RandomReadingFile extends InputStream
     }
 
     public final String readUTF() throws IOException {
+        return new String(readUTFchars());
+    }
+
+    public final char[] readUTFchars() throws IOException {
 
         /*
          * There is no need to advance the pointer manually,
@@ -246,7 +250,9 @@ public class RandomReadingFile extends InputStream
 	}
 
         // The number of chars produced may be less than utflen
-        return new String(str);
+        final char[] result = new char[str.length()];
+        str.getChars(0, str.length(), result, 0);
+        return result;
     }
 
     public final long readLong() throws IOException {
